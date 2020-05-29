@@ -27,5 +27,6 @@ jobs:
         npm install
         npm run compile
         npm run build --if-present
+        npm run fix
         npm run check
         npm test
