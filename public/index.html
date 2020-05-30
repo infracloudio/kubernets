@@ -1,7 +1,37 @@
 <!DOCTYPE html>
-<html>
-    <head><title>TypeScript Greeter</title></head>
-    <body>
-        <script src="../build/src/index.js"></script>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
+    <script type="text/javascript" src="../node_modules/graphdracula/dist/dracula.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/graphdracula/1.1.1/dracula.min.js"></script>
+</head>
+<body>
+    <div id="header">
+        Kubernets
+    </div>
+    <div id="content">
+        <div id="left" class="mainboxes" >
+            <div id="ns-dd">
+                <select id="namespaces">
+                    <option>Select namespace</option>
+                </select>
+            </div>
+            <div id="workloads">
+            </div>
+        </div>
+        <div id="middle" class="mainboxes">
+
+        </div>
+        <div id="right" class="mainboxes">
+
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../src/display_policies.js"></script>
+<!-- <script src="../build/src/index.js"></script> -->
 </html>
