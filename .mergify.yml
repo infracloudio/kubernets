@@ -4,7 +4,8 @@ pull_request_rules:
       - base=master
       - "#approved-reviews-by>=1"
       - label!=hold-off-merging
-      - status-success=CI / build
+      - status-success=build (10.x)
+      - status-success=build (12.x)
     actions:
       merge:
         method: squash
