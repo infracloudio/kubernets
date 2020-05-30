@@ -3,7 +3,6 @@ import k8s = require('@kubernetes/client-node');
 //Usage:
 //const obj = new KubeClient();
 //obj.getNamespaces().then((ns) => console.log(ns));
-//tslint:disable-next-line:no-unused-vars
 class KubeClient extends k8s.KubeConfig {
   constructor() {
     super();
