@@ -112,5 +112,7 @@ function getDirectedStyle(){
     return { style: {directed : true, stroke : "#f00" , fill : "#56f", label : "" } }
 }
 function getNamespaces(){
+    const obj = new KubeClient();
+    obj.getNamespaces().then((ns) => console.log(ns));
     return ["default", "kube-system", "kube-public"]
 }
