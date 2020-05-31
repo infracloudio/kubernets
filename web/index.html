@@ -25,6 +25,12 @@
             </div>
             <div id="workloads">
             </div>
+            <div id="bottom" class="mainboxes" >
+                <div id="policy_name">
+                    <label for="name">Policy Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+            </div>
         </div>
         <div id="middle" class="mainboxes">
 
@@ -32,7 +38,7 @@
         <div id="right" class="mainboxes">
             <h1>Network Policy YAML</h1>
             <div id="policy-div">
-                <textarea id="specs" rows="15" >
+                <textarea id="specs" rows="15" style="margin: 0px; width: 272px; height: 412px;">
                 </textarea>
             </div>
         </div>
@@ -42,4 +48,7 @@
 </body>
 <script type="text/javascript" src="scripts/display_policies.js"></script>
 <script type="text/javascript" src="scripts/display_yaml.js"></script>
+<script>
+    document.getElementById("specs").style.resize = "vertical";
+</script>
 </html>
