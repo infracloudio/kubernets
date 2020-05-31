@@ -59,7 +59,7 @@ function processWLResponse(){
                 wlEle.appendChild(sp)
                 var s=""
                 for (key in workloads[i].Labels){
-                    s = s+", "+(key+" : "+ workloads[i].Labels[key])
+                    s = s+","+(key+":"+ workloads[i].Labels[key])
                 }
                 wlEle.setAttribute("title", s)
 
@@ -190,7 +190,7 @@ function drawArrow(e){
     };
 
     console.log(targetObj)
-    
+
 
 
     var port = "8080";
