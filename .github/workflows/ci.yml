@@ -20,6 +20,15 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: 1.13
+    - name: install golint
+      run: |
+        go get -u golang.org/x/lint/golint
+    - name: Before build
+      run: |
+        ./hack/verify-gofmt.sh
+        ./hack/verify-govet.sh
+        ./hack/verify-golint.sh
+        go mod verify
     - name: Build
-      run: go build ./cmd/serve
+      run: make
 
