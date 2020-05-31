@@ -27,7 +27,6 @@ select{
 #header{
     padding: 10px;
     font-size: 20px !important;
-    font-weight: bold;
     margin-bottom: 20px;
 }
 .mainboxes{
@@ -54,4 +53,10 @@ select{
 }
 .wsel{
     width: 100% !important;
+}
+#header a{
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
 }
