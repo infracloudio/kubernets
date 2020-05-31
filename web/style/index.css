@@ -40,9 +40,6 @@ select{
 #left{
     border-right: 1px solid gray;
 }
-#middle{
-    /* overflow-x: scroll; */
-}
 #right{
     border-left: 1px solid gray;
 }

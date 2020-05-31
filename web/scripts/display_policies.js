@@ -21,8 +21,6 @@ function createXMLHttpRequestObject(){
 
 document.addEventListener("DOMContentLoaded", function (){
     loadNamespaces()
-    // loadPolicyRels()
-    // drawExistingNWPolicies()
 })
 
 ns.addEventListener("change", function populateWorkloads(event){
@@ -160,7 +158,6 @@ function processRelResponse(){
             node = relations[i].Node
             connectedTo = relations[i].Connected
             for (j = 0; j< connectedTo.length; j++){
-                // g.addEdge("tomato", "apple");
                 g.addEdge(node.Kind+"/"+ node.Name, connectedTo[j].Kind+"/"+connectedTo[j].Name,getDirectedStyle())
             }
         }
