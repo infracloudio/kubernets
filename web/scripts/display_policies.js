@@ -165,6 +165,7 @@ function drawArrow(e){
     connect = document.createElement("connection")
     connect.setAttribute("from", "#"+sourceid)
     connect.setAttribute("to", "#"+targetid)
+    connect.setAttribute("tail", "")
     document.body.appendChild(connect)
 
     generateNWPolicyYaml(sourceid, targetid)

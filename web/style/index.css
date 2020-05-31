@@ -17,6 +17,7 @@ select{
     margin: auto;
     margin-top: 20px;
     word-wrap: break-word;
+    border-radius: 12px;
 }
 .labels{
     background-color: #4b00823d;
