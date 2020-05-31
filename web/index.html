@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style/domarrow.css" />
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.js> </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/graphdracula/1.1.1/dracula.min.js"></script>
     <script type="text/javascript" src="scripts/domarrow/domarrow.js"></script>
 </head>
@@ -29,12 +30,16 @@
 
         </div>
         <div id="right" class="mainboxes">
-
+            <h1>Network Policy YAML</h1>
+            <div id="policy-div">
+                <textarea id="specs" rows="15" >
+                </textarea>
+            </div>
         </div>
     </div>
     <div id="footer">
     </div>
 </body>
 <script type="text/javascript" src="scripts/display_policies.js"></script>
-<script type="text/javascript" src="scripts/dnd.js"></script>
+<script type="text/javascript" src="scripts/display_yaml.js"></script>
 </html>
