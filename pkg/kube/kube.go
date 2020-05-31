@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"reflect"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -89,4 +90,82 @@ func (c *Client) GetWorkloads(ctx context.Context, namespace string) ([]Workload
 		return nil, err
 	}
 	return append(dw, sw...), nil
+}
+
+func (c *Client) getWorkloadFromLabels(wl []Workload, labels map[string]string) []Workload {
+	workList := []Workload{}
+	for _, w := range wl {
+		matched := true
+		for sk, sv := range labels {
+			if w.Labels[sk] != sv {
+				matched = false
+			}
+		}
+		if matched {
+			workList = append(workList, w)
+		}
+	}
+	return workList
+}
+
+func (c *Client) addToRelation(rel []Relation, src, target []Workload) []Relation {
+	for _, sw := range src {
+		exists := false
+		for i := range rel {
+			if !reflect.DeepEqual(rel[i].Node, sw) {
+				continue
+			}
+			// Add new connection if relation already exists
+			for _, tw := range target {
+				rel[i].Connected = append(rel[i].Connected, tw)
+			}
+			exists = true
+			break
+		}
+		// Add new relation if not exists
+		if !exists {
+			rel = append(rel, Relation{Node: sw, Connected: target})
+		}
+	}
+	return rel
+}
+
+// BuildGraph returns relation schema between workloads as per the network policies
+func (c *Client) BuildGraph(ctx context.Context, namespace string) ([]Relation, error) {
+	netPolicies, err := c.NetworkingV1().NetworkPolicies(namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	wl, err := c.GetWorkloads(ctx, namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	rel := []Relation{}
+	for _, n := range netPolicies.Items {
+		// TODO: Just parsing ingress rules for now. Add support for ingress in future
+		for _, ing := range n.Spec.Ingress {
+			ports := []string{}
+			for _, p := range ing.Ports {
+				if p.Port != nil {
+					ports = append(ports, p.Port.String())
+				}
+			}
+			for _, from := range ing.From {
+				srcWorkload := c.getWorkloadFromLabels(wl, from.PodSelector.MatchLabels)
+				tarWorkload := c.getWorkloadFromLabels(wl, n.Spec.PodSelector.MatchLabels)
+				if srcWorkload == nil || tarWorkload == nil {
+					continue
+				}
+				// Add ports and policy
+				for i := range tarWorkload {
+					tarWorkload[i].Ports = ports
+					tarWorkload[i].NetworkPolicy = n.GetName()
+				}
+				rel = c.addToRelation(rel, srcWorkload, tarWorkload)
+			}
+		}
+	}
+	return rel, nil
 }
