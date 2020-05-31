@@ -136,22 +136,6 @@ var render = (r, n) => {
       return set;
     };
 
-
-// g.addNode('newnode', {label: "abc", render: render});
-// g.addEdge("strawberry", "cherry", getDirectedStyle());
-// g.addEdge('id34', 'cherry', getDirectedStyle());
-// g.addEdge("strawberry", "apple", getDirectedStyle());
-// g.addEdge("strawberry", "tomato");
-
-// g.addEdge("tomato", "apple");
-// g.addEdge("tomato", "kiwi");
-
-// g.addEdge("cherry", "apple");
-// g.addEdge("cherry", "kiwi");
-
-
-
-
 xmlReqPol = createXMLHttpRequestObject()
 function loadPolicyRels(){
     nsSelected = document.getElementById("namespaces").value
