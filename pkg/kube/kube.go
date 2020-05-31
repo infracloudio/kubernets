@@ -60,7 +60,7 @@ func (c *Client) getDeployments(ctx context.Context, namespace string) ([]Worklo
 	}
 	workloads := []Workload{}
 	for _, d := range deployList.Items {
-		workloads = append(workloads, Workload{Name: d.GetName(), Namespace: d.GetNamespace(), Kind: "Deployment", Labels: d.GetLabels()})
+		workloads = append(workloads, Workload{Name: d.GetName(), Namespace: d.GetNamespace(), Kind: "Deployment", Labels: d.Spec.Selector.MatchLabels})
 	}
 	return workloads, nil
 }
@@ -72,7 +72,7 @@ func (c *Client) getStatefulSets(ctx context.Context, namespace string) ([]Workl
 	}
 	workloads := []Workload{}
 	for _, d := range ssList.Items {
-		workloads = append(workloads, Workload{Name: d.GetName(), Namespace: d.GetNamespace(), Kind: "Deployment", Labels: d.GetLabels()})
+		workloads = append(workloads, Workload{Name: d.GetName(), Namespace: d.GetNamespace(), Kind: "StatefulSet", Labels: d.Spec.Selector.MatchLabels})
 	}
 	return workloads, nil
 }
