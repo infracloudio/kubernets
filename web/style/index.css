@@ -1,0 +1,54 @@
+*{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    margin: 0;
+}
+select{
+    padding: 5px;
+    background-color: white;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+.workloads{
+    border: 1px solid gray;
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+}
+.labels{
+    background-color: #4b00823d;
+    border-radius: 2px;
+    padding: 5px;
+}
+#header{
+    padding: 10px;
+    font-size: 20px !important;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.mainboxes{
+    width: 33%;
+    float: left;
+    height: 500px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.workload{
+    border: 1px solid gray;
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 2px;
+}
+#left{
+    border-right: 1px solid gray;
+}
+#middle{
+
+}
+#right{
+    border-left: 1px solid gray;
+}
