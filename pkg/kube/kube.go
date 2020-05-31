@@ -7,15 +7,18 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	// Enable auth for cloud providers
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
+// Client implements methods to get K8s resources
 type Client struct {
 	kubernetes.Interface
 }
 
+// NewClient returns new Client object
 func NewClient() (*Client, error) {
 	kubeConfig, err := rest.InClusterConfig()
 	if err != nil {
@@ -36,6 +39,7 @@ func NewClient() (*Client, error) {
 	return &Client{kubeClient}, nil
 }
 
+// GetNamespaces returns list of K8s namespaces
 func (c *Client) GetNamespaces(ctx context.Context) ([]string, error) {
 	nsList, err := c.CoreV1().Namespaces().List(ctx, metav1.ListOptions{})
 	if err != nil {
@@ -48,7 +52,7 @@ func (c *Client) GetNamespaces(ctx context.Context) ([]string, error) {
 	return namespaces, nil
 }
 
-func (c *Client) GetDeployments(ctx context.Context, namespace string) ([]Workload, error) {
+func (c *Client) getDeployments(ctx context.Context, namespace string) ([]Workload, error) {
 	deployList, err := c.AppsV1().Deployments(namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
 		return nil, err
@@ -60,7 +64,7 @@ func (c *Client) GetDeployments(ctx context.Context, namespace string) ([]Worklo
 	return workloads, nil
 }
 
-func (c *Client) GetStatefulSets(ctx context.Context, namespace string) ([]Workload, error) {
+func (c *Client) getStatefulSets(ctx context.Context, namespace string) ([]Workload, error) {
 	ssList, err := c.AppsV1().StatefulSets(namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
 		return nil, err
@@ -72,13 +76,14 @@ func (c *Client) GetStatefulSets(ctx context.Context, namespace string) ([]Workl
 	return workloads, nil
 }
 
+// GetWorkloads returns list of K8s workloads - deployments and statefulsets in a namespace
 func (c *Client) GetWorkloads(ctx context.Context, namespace string) ([]Workload, error) {
-	dw, err := c.GetDeployments(ctx, namespace)
+	dw, err := c.getDeployments(ctx, namespace)
 	if err != nil {
 		log.Println("Failed to get deployments.", err)
 		return nil, err
 	}
-	sw, err := c.GetStatefulSets(ctx, namespace)
+	sw, err := c.getStatefulSets(ctx, namespace)
 	if err != nil {
 		log.Println("Failed to get statefulsets.", err)
 		return nil, err

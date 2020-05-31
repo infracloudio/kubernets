@@ -1,4 +1,7 @@
 # kubernets
+
+![CI](https://github.com/infracloudio/kubernets/workflows/CI/badge.svg)
+
 kubernets by kubernerds
 
 ## Build
