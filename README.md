@@ -12,4 +12,6 @@ make
 
 (optional) export KUBERNETS_SERVER_PORT=8080 (default: 8080)
 
-kubernets
+$ kubernets
+
+Open `http://localhost:8080/web/` on browser
