@@ -21,6 +21,7 @@ function createXMLHttpRequestObject(){
 
 document.addEventListener("DOMContentLoaded", function (){
     loadNamespaces()
+    // loadPolicyRels()
     // drawExistingNWPolicies()
 })
 
@@ -28,6 +29,7 @@ ns.addEventListener("change", function populateWorkloads(event){
     resetWorkloads()
     nsSelected = event.target.value
     getWorkloadOfNS(nsSelected)
+    loadPolicyRels()
 })
 
 function resetWorkloads(){
@@ -48,7 +50,7 @@ function getWorkloadOfNS(ns){
 function processWLResponse(){
     if (xmlReqWL.status == 200 && xmlReqWL.readyState == 4){
         workloads = JSON.parse(xmlReqWL.responseText)
-        console.log(workloads)
+
         for (i=0; i<workloads.length; i++){
             wlEle = document.createElement("div")
             wlEle.setAttribute("draggable", "true")
@@ -72,7 +74,6 @@ function processWLResponse(){
             loads.appendChild(wlEle)
         }
     }
-    console.log(workloadEleIDMap)
 }
 
 function addWorkloads(ele, w, index){
@@ -135,24 +136,54 @@ var render = (r, n) => {
       return set;
     };
 
-var g = new Dracula.Graph();
+
 // g.addNode('newnode', {label: "abc", render: render});
-g.addEdge("strawberry", "cherry", getDirectedStyle());
-g.addEdge('id34', 'cherry', getDirectedStyle());
-g.addEdge("strawberry", "apple", getDirectedStyle());
-g.addEdge("strawberry", "tomato");
+// g.addEdge("strawberry", "cherry", getDirectedStyle());
+// g.addEdge('id34', 'cherry', getDirectedStyle());
+// g.addEdge("strawberry", "apple", getDirectedStyle());
+// g.addEdge("strawberry", "tomato");
 
-g.addEdge("tomato", "apple");
-g.addEdge("tomato", "kiwi");
+// g.addEdge("tomato", "apple");
+// g.addEdge("tomato", "kiwi");
 
-g.addEdge("cherry", "apple");
-g.addEdge("cherry", "kiwi");
+// g.addEdge("cherry", "apple");
+// g.addEdge("cherry", "kiwi");
 
+
+
+
+xmlReqPol = createXMLHttpRequestObject()
+function loadPolicyRels(){
+    nsSelected = document.getElementById("namespaces").value
+    if (nsSelected != "none"){
+        console.log("MakingHTTP request to "+ BASE_URL+"/"+ API_VERSION+"/namespace/"+nsSelected+"/network/graph")
+        xmlReqPol.open("GET", BASE_URL+"/"+ API_VERSION+"/namespace/"+nsSelected+"/network/graph")
+        xmlReqPol.onreadystatechange = processRelResponse
+        xmlReqPol.send(null)
+    }
+}
+
+
+var g = new Dracula.Graph();
 var layouter = new Dracula.Layout.Spring(g);
-layouter.layout();
-
 var renderer = new Dracula.Renderer.Raphael('#middle', g, 400, 300);
-renderer.draw();
+function processRelResponse(){
+
+    if (xmlReqPol.status == 200 && xmlReqPol.readyState == 4){
+        relations = JSON.parse(xmlReqPol.responseText)
+        console.log(relations)
+        for (i = 0; i< relations.length; i++){
+            node = relations[i].Node
+            connectedTo = relations[i].Connected
+            for (j = 0; j< connectedTo.length; j++){
+                // g.addEdge("tomato", "apple");
+                g.addEdge(node.Kind+"/"+ node.Name, connectedTo[j].Kind+"/"+connectedTo[j].Name,getDirectedStyle())
+            }
+        }
+    }
+    layouter.layout();
+    renderer.draw();
+}
 
 function getDirectedStyle(){
     return { style: {directed : true, stroke : "#f00" , fill : "#56f", label : "" } }
