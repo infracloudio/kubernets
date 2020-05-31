@@ -16,6 +16,7 @@ select{
     width: 50%;
     margin: auto;
     margin-top: 20px;
+    word-wrap: break-word;
 }
 .labels{
     background-color: #4b00823d;
@@ -35,14 +36,6 @@ select{
     box-sizing: border-box;
     text-align: center;
 }
-.workload{
-    border: 1px solid gray;
-    padding: 10px;
-    width: 50%;
-    margin: auto;
-    margin-top: 10px;
-    border-radius: 2px;
-}
 #left{
     border-right: 1px solid gray;
 }
@@ -51,4 +44,16 @@ select{
 }
 #right{
     border-left: 1px solid gray;
+}
+#footer{
+    clear: both;
+}
+.wldrop{
+    width: 70% !important;
+    margin: auto;
+    margin-top: 10px;
+    display: none;
+}
+.wsel{
+    width: 100% !important;
 }

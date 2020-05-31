@@ -3,6 +3,8 @@ const API_VERSION="v1"
 const NS_URL="namespace"
 const WORKLOAD_URL = "workloads"
 
+// this is going to store the
+let workloadEleIDMap  = {}
 
 let loads = document.getElementById("workloads")
 let ns = document.getElementById("namespaces")
@@ -49,23 +51,47 @@ function processWLResponse(){
         console.log(workloads)
         for (i=0; i<workloads.length; i++){
             wlEle = document.createElement("div")
+            wlEle.setAttribute("draggable", "true")
             wlEle.classList.add("workloads")
                 sp = document.createElement("span")
-                sp.innerHTML = workloads[i].Namespace+"/"+workloads[i].Kind+"/"+workloads[i].Name
+                name = workloads[i].Namespace+"/"+workloads[i].Kind+"/"+workloads[i].Name
+                sp.innerHTML = name
                 wlEle.appendChild(sp)
+                var s=""
+                for (key in workloads[i].Labels){
+                    s = s+", "+(key+" : "+ workloads[i].Labels[key])
+                }
+                wlEle.setAttribute("title", s)
 
-                labs = document.createElement("div")
-                    for (key in workloads[i].Labels){
-                        s = document.createElement("div")
-                        s.innerHTML = key+" : "+ workloads[i].Labels[key]
-                        s.classList.add("labels")
-                        labs.appendChild(s)
-                    }
-                wlEle.appendChild(labs)
-            wlEle.setAttribute("id", "wl"+i)
+                // add all the workloads in the dropdown
+                addWorkloads(wlEle, workloads, i)
+            id = "wl"+i
+            wlEle.setAttribute("id", id)
+            wlEle.setAttribute("name", name)
+            workloadEleIDMap[name] = id
             loads.appendChild(wlEle)
         }
     }
+    console.log(workloadEleIDMap)
+}
+
+function addWorkloads(ele, w, index){
+    var wlDrop = document.createElement("div")
+    wlDrop.classList.add("wldrop")
+    wlDrop.setAttribute("id", "wldrop"+index)
+        var wsel = document.createElement("select")
+        wsel.setAttribute("onchange", "drawArrow(this)")
+        wsel.setAttribute("id", "wsel"+i)
+        wsel.classList.add("wsel")
+        for (k = 0; k< w.length; k++){
+            var op = document.createElement("option")
+            a = w[k].Namespace+"/"+w[k].Kind+"/"+w[k].Name
+            op.innerHTML = a
+            op.setAttribute("optionid", index)
+            wsel.appendChild(op)
+        }
+    wlDrop.appendChild(wsel)
+    ele.appendChild(wlDrop)
 }
 
 xmlReqNS = createXMLHttpRequestObject()
@@ -132,3 +158,18 @@ function getDirectedStyle(){
     return { style: {directed : true, stroke : "#f00" , fill : "#56f", label : "" } }
 }
 
+function drawArrow(e){
+    sourceid = e.parentElement.getAttribute("id")
+    targetid = getIDOfWorkload(e.value)
+
+    connect = document.createElement("connection")
+    connect.setAttribute("from", "#"+sourceid)
+    connect.setAttribute("to", "#"+targetid)
+    document.body.appendChild(connect)
+
+    generateNWPolicyYaml(sourceid, targetid)
+}
+
+function getIDOfWorkload(value){
+    return workloadEleIDMap[value]
+}
