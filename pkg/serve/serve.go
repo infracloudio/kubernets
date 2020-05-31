@@ -29,7 +29,11 @@ func GetNamespaces(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		http.Error(w, fmt.Sprintf("Failed to access Kubernetes cluster. Error: %s", err.Error()), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(ns)
+	if err := json.NewEncoder(w).Encode(ns); err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintf("Failed to create response. Error: %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
 }
 
 // GetWorkloads returns list of namespaces
@@ -52,5 +56,37 @@ func GetWorkloads(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		http.Error(w, fmt.Sprintf("Failed to access Kubernetes cluster. Error: %s", err.Error()), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(wl)
+	if err := json.NewEncoder(w).Encode(wl); err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintf("Failed to create response. Error: %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
+}
+
+// BuildGraph builds relation based on network policies between workloads
+func BuildGraph(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	// Enable CORS
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+
+	ns := p.ByName("namespace")
+	kubeCli, err := kube.NewClient()
+	if err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintf("Failed to access Kubernetes cluster. Error: %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
+	graph, err := kubeCli.BuildGraph(context.TODO(), ns)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintf("Failed to create relations. Error: %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
+
+	if err := json.NewEncoder(w).Encode(graph); err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintf("Failed to create response. Error: %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
 }
