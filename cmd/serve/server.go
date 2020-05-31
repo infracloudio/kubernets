@@ -21,6 +21,7 @@ func main() {
 	router := httprouter.New()
 	router.GET(fmt.Sprintf("/%s/namespace", apiVersion), serve.GetNamespaces)
 	router.GET(fmt.Sprintf("/%s/namespace/:namespace/workloads", apiVersion), serve.GetWorkloads)
+	router.GET(fmt.Sprintf("/%s/namespace/:namespace/network/graph", apiVersion), serve.BuildGraph)
 	handler := cors.Default().Handler(router)
 
 	port := defaultPort
