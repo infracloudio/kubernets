@@ -8,7 +8,7 @@ find_files() {
   find . -name '*.go'
 }
 
-bad_files=$(find_files | xargs -I@ bash -c "golint @")
+bad_files=$(find_files | xargs -I@ bash -c "$GOPATH/bin/golint @")
 if [[ -n "${bad_files}" ]]; then
   echo "${bad_files}"
   exit 1
