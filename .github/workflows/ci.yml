@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GO111MODULE: on
-      GOPATH: /home/runner/work/botkube
-      GOBIN: /home/runner/work/botkube/bin
+      GOPATH: /home/runner/work/kubernets
+      GOBIN: /home/runner/work/kubernets/bin
     steps:
     - name: Checkout
       uses: actions/checkout@v1
@@ -20,6 +20,15 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: 1.13
+    - name: Install golint
+      run: |
+        go get -u golang.org/x/lint/golint
+    - name: Before build
+      run: |
+        ./hack/verify-gofmt.sh
+        ./hack/verify-govet.sh
+        ./hack/verify-golint.sh
+        go mod verify
     - name: Build
-      run: go build ./cmd/serve
+      run: make
 
