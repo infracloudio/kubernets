@@ -180,20 +180,14 @@ function drawArrow(e){
     connect.setAttribute("tail", "")
     document.body.appendChild(connect)
 
-    // console.log(document.getElementById(targetid).title)
-
+    // target is the workload on which the network policy will be applied
     let source_label = document.getElementById(sourceid).title
     let target_label = document.getElementById(targetid).title;
-    console.log("source", document.getElementById(sourceid).title)
-    console.log("target", document.getElementById(targetid).title)
 
     target_label = target_label.substring(1, target_label.length)
     source_label = target_label.substring(0, target_label.length)
 
-    console.log("target1", source_label)
-
     target_label_split = target_label.split(",")
-    
     let targetObj = {};
     for (i=0; i<target_label_split.length; i++) {
         val = target_label_split[i].split(":")
@@ -201,33 +195,23 @@ function drawArrow(e){
     };
 
     source_label_split = source_label.split(",")
-    console.log("target2", source_label_split)
     let sourceObj = {};
     for (i=0; i<source_label_split.length; i++) {
         val = source_label_split[i].split(":")
         sourceObj[val[0]] = val[1]
     };
 
-    console.log(sourceObj)
-
-
-
     var port = "8080";
     var policy_types = "Ingress"
     var protocol = "TCP"
     var policy_name = "test-network-policy"
 
-    // console.log(obj)
-
     var doc = jsyaml.load('apiVersion: networking.k8s.io\/v1\r\nkind: NetworkPolicy\r\nmetadata:\r\n  name: test-network-policy\r\n  namespace: default\r\nspec:\r\n  podSelector:\r\n    matchLabels:\r\n      role: db\r\n  policyTypes:\r\n  - Ingress\r\n  ingress:\r\n  - from:\r\n    - namespaceSelector:\r\n        matchLabels:\r\n          project: myproject\r\n    - podSelector:\r\n        matchLabels:\r\n          role: frontend\r\n    ports:\r\n    - protocol: TCP\r\n      port: 6379');
     doc.spec.podSelector.matchLabels = targetObj;
-    // console.log(doc)
     doc.spec.ingress[0].from[1].podSelector.matchLabels = sourceObj;
     const yaaml = jsyaml.safeDump(doc);
     document.getElementById("codegen").value=yaaml
 
-
-    // generateNWPolicyYaml(sourceid, targetid)
 }
 
 function getIDOfWorkload(value){

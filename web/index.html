@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style/index.css" />
     <link rel="stylesheet" href="style/domarrow.css" />
-    <link rel="stylesheet" href="scripts/codemirror/codemirror.css">
+    <!-- <link rel="stylesheet" href="scripts/codemirror/codemirror.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.js> </script>
@@ -36,10 +36,10 @@
 
         </div>
         <div id="right" class="mainboxes">
-            <!-- <h1>Network Policy YAML</h1> -->
+            <h1>Network Policy YAML</h1>
             <div class="position-relative row d-flex justify-content-between mt-4" style="height:65%;">
                 <div class="position-relative form-group apply_space" style="height:85%;">
-                  <label for="yaml">YAML</label>
+                  <!-- <label for="yaml">YAML</label> -->
                   <textarea class="form-control codemirror-textarea" id="codegen" rows="15" style="margin: 0px; height: 471px; width: 288px;"></textarea>
                 </div>
             </div>
@@ -51,9 +51,9 @@
 <script type="text/javascript" src="scripts/display_policies.js"></script>
 <script type="text/javascript" src="scripts/dnd.js"></script>
 <script type="text/javascript" src="scripts/display_yaml.js"></script>
-<script src="scripts/codemirror/codemirror.js"></script>
-<script type="text/javascript" src="scripts/codemirror/codemirror-yaml.js"></script>
-<!-- <script>
-    document.getElementById("specs").style.resize = "vertical";
-</script> -->
+<!-- <script src="scripts/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="scripts/codemirror/codemirror-yaml.js"></script> -->
+<script>
+    document.getElementById("codegen").style.resize = "vertical";
+</script>
 </html>
