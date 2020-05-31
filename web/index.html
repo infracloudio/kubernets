@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style/index.css" />
     <link rel="stylesheet" href="style/domarrow.css" />
+    <link rel="stylesheet" href="scripts/codemirror/codemirror.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.js> </script>
@@ -25,21 +26,17 @@
             </div>
             <div id="workloads">
             </div>
-            <div id="bottom" class="mainboxes" >
-                <div id="policy_name">
-                    <label for="name">Policy Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-            </div>
         </div>
         <div id="middle" class="mainboxes">
 
         </div>
         <div id="right" class="mainboxes">
-            <h1>Network Policy YAML</h1>
-            <div id="policy-div">
-                <textarea id="specs" rows="15" style="margin: 0px; width: 272px; height: 412px;">
-                </textarea>
+            <!-- <h1>Network Policy YAML</h1> -->
+            <div class="position-relative row d-flex justify-content-between mt-4" style="height:65%;">
+                <div class="position-relative form-group apply_space" style="height:85%;">
+                  <label for="yaml">YAML</label>
+                  <textarea class="form-control codemirror-textarea" id="codegen" rows="15" style="margin: 0px; height: 471px; width: 288px;"></textarea>
+                </div>
             </div>
         </div>
     </div>
@@ -47,8 +44,11 @@
     </div>
 </body>
 <script type="text/javascript" src="scripts/display_policies.js"></script>
+<script type="text/javascript" src="scripts/dnd.js"></script>
 <script type="text/javascript" src="scripts/display_yaml.js"></script>
-<script>
+<script src="scripts/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="scripts/codemirror/codemirror-yaml.js"></script>
+<!-- <script>
     document.getElementById("specs").style.resize = "vertical";
-</script>
+</script> -->
 </html>
