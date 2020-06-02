@@ -228,7 +228,7 @@ spec:
           role: frontend
     ports:
     - protocol: TCP
-      port: 6379
+      port: PORT_NUMBER
 `);
     doc.spec.podSelector.matchLabels = targetObj;
     doc.spec.ingress[0].from[0].podSelector.matchLabels = sourceObj;
