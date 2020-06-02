@@ -171,7 +171,7 @@ function getDirectedStyle(){
 }
 
 function drawArrow(e){
-    sourceid = e.parentElement.getAttribute("id")
+    sourceid = e.parentElement.parentElement.getAttribute("id")
     targetid = getIDOfWorkload(e.value)
 
     connect = document.createElement("connection")
@@ -187,7 +187,7 @@ function createYaml(sourceid, targetid){
     let source_label = document.getElementById(sourceid).title;
     let target_label = document.getElementById(targetid).title;
     target_label = target_label.substring(1, target_label.length);
-    source_label = target_label.substring(0, target_label.length);
+    source_label = source_label.substring(1, source_label.length);
     // Converting to object
     target_label_split = target_label.split(",");
     let targetObj = {};
