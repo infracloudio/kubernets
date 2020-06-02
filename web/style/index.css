@@ -36,6 +36,12 @@ select{
     box-sizing: border-box;
     text-align: center;
 }
+.manifestbox{
+    width: 33%;
+    float: left;
+    height: 500px;
+    box-sizing: border-box;
+}
 #left{
     border-right: 1px solid gray;
 }

@@ -209,11 +209,38 @@ function createYaml(sourceid, targetid){
     var protocol = "TCP";
     var policy_name = "test-network-policy";
     // Substituting labels to form yaml
-    var doc = jsyaml.load('apiVersion: networking.k8s.io\/v1\r\nkind: NetworkPolicy\r\nmetadata:\r\n  name: test-network-policy\r\n  namespace: default\r\nspec:\r\n  podSelector:\r\n    matchLabels:\r\n      role: db\r\n  policyTypes:\r\n  - Ingress\r\n  ingress:\r\n  - from:\r\n    - namespaceSelector:\r\n        matchLabels:\r\n          project: myproject\r\n    - podSelector:\r\n        matchLabels:\r\n          role: frontend\r\n    ports:\r\n    - protocol: TCP\r\n      port: 6379');
+    var doc = jsyaml.safeLoad(`
+apiVersion: networking.k8s.io\/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: frontend
+    ports:
+    - protocol: TCP
+      port: 6379
+`);
     doc.spec.podSelector.matchLabels = targetObj;
-    doc.spec.ingress[0].from[1].podSelector.matchLabels = sourceObj;
+    doc.spec.ingress[0].from[0].podSelector.matchLabels = sourceObj;
     const yaaml = jsyaml.safeDump(doc);
-    document.getElementById("codegen").value=yaaml;
+
+    var output = document.getElementById('codegen');
+    manifest = CodeMirror.fromTextArea(output, {
+      mode: "text/x-yaml",
+      lineNumbers : true
+    });
+    manifest.setValue(yaaml);
+    manifest.setSize(300, 600);
 }
 
 function getIDOfWorkload(value){

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style/index.css" />
     <link rel="stylesheet" href="style/domarrow.css" />
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="scripts/plugin/codemirror/lib/codemirror.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.js> </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/graphdracula/1.1.1/dracula.min.js"></script>
@@ -34,10 +35,10 @@
         <div id="middle" class="mainboxes">
 
         </div>
-        <div id="right" class="mainboxes">
-            <h1>Network Policy YAML</h1>
-            <div>
-                <textarea class="form-control codemirror-textarea" id="codegen" rows="15" style="margin: 0px; height: 471px; width: 288px;"></textarea>
+        <div id="right" class="manifestbox">
+            <h1 style="text-align:center;">Network Policy YAML</h1>
+            <div style="margin-left:18%;height:100%;">
+                <textarea class="form-control codemirror-textarea" id="codegen" rows="15" style="width: 288px;"></textarea>
             </div>
         </div>
     </div>
@@ -46,8 +47,6 @@
 </body>
 <script type="text/javascript" src="scripts/display_policies.js"></script>
 <script type="text/javascript" src="scripts/dnd.js"></script>
-<script type="text/javascript" src="scripts/display_yaml.js"></script>
-<script>
-    document.getElementById("codegen").style.resize = "vertical";
-</script>
+<script type="text/javascript" src="scripts/plugin/codemirror/lib/codemirror.js"></script>
+<script src="scripts/plugin/codemirror/mode/yaml/yaml.js"></script>
 </html>
