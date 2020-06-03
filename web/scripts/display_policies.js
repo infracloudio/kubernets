@@ -208,6 +208,15 @@ function createYaml(sourceid, targetid){
         sourceObj[val[0]] = val[1]
     };
 
+    // Getting workload names
+    let source_element = document.getElementById(sourceid);
+    let target_element = document.getElementById(targetid);
+    let name_space = document.getElementById(sourceid);
+
+    source_name=source_element.getAttribute("name").split("/")[2];
+    target_name=target_element.getAttribute("name").split("/")[2];
+    name_space_name=name_space.getAttribute("name").split("/")[0];
+
     // variables
     var port = "8080";
     var policy_types = "Ingress";
@@ -237,8 +246,9 @@ spec:
 `);
     doc.spec.podSelector.matchLabels = targetObj;
     doc.spec.ingress[0].from[0].podSelector.matchLabels = sourceObj;
+    doc.metadata.name = source_name+"-"+target_name;
+    doc.metadata.namespace = name_space_name;
     const yaaml = jsyaml.safeDump(doc);
-
     manifest.setValue(yaaml);
     manifest.setSize(450, 600);
 }
