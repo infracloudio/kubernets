@@ -218,6 +218,22 @@ function createYaml(sourceid, targetid){
     target_name=target_element.getAttribute("name").split("/")[2];
     name_space_name=name_space.getAttribute("name").split("/")[0];
 
+    // Add default deny all policy
+    if(manifest.getValue() === ""){
+        var def_policy = jsyaml.safeLoad(`
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: default
+spec:
+  podSelector: {}
+  ingress: []
+`)
+        def_policy.metadata.namespace = name_space_name;
+        manifest.setValue(jsyaml.safeDump(def_policy));
+    }
+
     // variables
     var port = "8080";
     var policy_types = "Ingress";
@@ -249,7 +265,6 @@ spec:
     doc.metadata.name = source_name+"-"+target_name;
     doc.metadata.namespace = name_space_name;
     const yaaml = jsyaml.safeDump(doc);
-
     manifest.replaceRange("---\n" + yaaml, CodeMirror.Pos(manifest.lastLine()));
 }
 
