@@ -32,7 +32,7 @@ select{
 .mainboxes{
     width: 33%;
     float: left;
-    height: 500px;
+    height: 1000px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -42,12 +42,7 @@ select{
     height: 500px;
     box-sizing: border-box;
 }
-#left{
-    border-right: 1px solid gray;
-}
-#right{
-    border-left: 1px solid gray;
-}
+
 #footer{
     clear: both;
 }
@@ -68,4 +63,10 @@ select{
 }
 #header img{
     width: 250px;
+}
+#middle{
+    background-color: #989a991f
+}
+#middle svg{
+    background-color: white;
 }
