@@ -145,10 +145,15 @@ function loadPolicyRels(){
     }
 }
 
-
 var g = new Dracula.Graph();
 var layouter = new Dracula.Layout.Spring(g);
 var renderer = new Dracula.Renderer.Raphael('#middle', g, 400, 300);
+let output = document.getElementById('codegen');
+let manifest = CodeMirror.fromTextArea(output, {
+    mode: "text/x-yaml",
+    lineNumbers : true
+});
+
 function processRelResponse(){
 
     if (xmlReqPol.status == 200 && xmlReqPol.readyState == 4){
@@ -234,13 +239,8 @@ spec:
     doc.spec.ingress[0].from[0].podSelector.matchLabels = sourceObj;
     const yaaml = jsyaml.safeDump(doc);
 
-    var output = document.getElementById('codegen');
-    manifest = CodeMirror.fromTextArea(output, {
-      mode: "text/x-yaml",
-      lineNumbers : true
-    });
     manifest.setValue(yaaml);
-    manifest.setSize(300, 600);
+    manifest.setSize(450, 600);
 }
 
 function getIDOfWorkload(value){
