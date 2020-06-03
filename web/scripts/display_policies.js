@@ -153,6 +153,7 @@ let manifest = CodeMirror.fromTextArea(output, {
     mode: "text/x-yaml",
     lineNumbers : true
 });
+manifest.setSize(450, 600);
 
 function processRelResponse(){
 
@@ -224,7 +225,7 @@ function createYaml(sourceid, targetid){
     var policy_name = "test-network-policy";
     // Substituting labels to form yaml
     var doc = jsyaml.safeLoad(`
-apiVersion: networking.k8s.io\/v1
+apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: test-network-policy
@@ -242,15 +243,14 @@ spec:
           role: frontend
     ports:
     - protocol: TCP
-      port: PORT_NUMBER
-`);
+      port: PORT_NUMBER`);
     doc.spec.podSelector.matchLabels = targetObj;
     doc.spec.ingress[0].from[0].podSelector.matchLabels = sourceObj;
     doc.metadata.name = source_name+"-"+target_name;
     doc.metadata.namespace = name_space_name;
     const yaaml = jsyaml.safeDump(doc);
-    manifest.setValue(yaaml);
-    manifest.setSize(450, 600);
+
+    manifest.replaceRange("---\n" + yaaml, CodeMirror.Pos(manifest.lastLine()));
 }
 
 function getIDOfWorkload(value){
