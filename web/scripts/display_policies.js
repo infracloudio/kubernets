@@ -2,6 +2,7 @@ const BASE_URL="http://localhost:8080"
 const API_VERSION="v1"
 const NS_URL="namespace"
 const WORKLOAD_URL = "workloads"
+let codecopied = document.getElementById("codecopied")
 
 // this is going to store the
 let workloadEleIDMap  = {}
@@ -266,6 +267,13 @@ spec:
     doc.metadata.namespace = name_space_name;
     const yaaml = jsyaml.safeDump(doc);
     manifest.replaceRange("---\n" + yaaml, CodeMirror.Pos(manifest.lastLine()));
+    document.getElementById("copybutton").addEventListener("click", function (){
+        navigator.clipboard.writeText(manifest.getValue())
+        code_copied.style.display="inline"
+        window.setTimeout(function (){
+            code_copied.style.display="none"
+          }, 500)
+      });
 }
 
 function getIDOfWorkload(value){

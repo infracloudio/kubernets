@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style/index.css" />
     <link rel="stylesheet" href="style/domarrow.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.54.0/codemirror.min.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
@@ -38,8 +39,12 @@
 
         </div>
         <div id="right" class="manifestbox">
-            <h1 style="text-align:center;">Network Policy YAML</h1>
             <div style="height:100%;">
+                <div>
+                    <label for="codegen">Network Policy</label> 
+                    <span id="code_copied" style="display: none;">YAML copied</span>
+                    <i class="fa fa-copy flr" id="copybutton" title="Copy Code"></i>
+                  </div>
                 <textarea class="form-control codemirror-textarea" id="codegen" rows="30"></textarea>
             </div>
         </div>
