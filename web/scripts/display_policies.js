@@ -2,6 +2,7 @@ const BASE_URL="http://localhost:8080"
 const API_VERSION="v1"
 const NS_URL="namespace"
 const WORKLOAD_URL = "workloads"
+let codecopied = document.getElementById("codecopied")
 
 // this is going to store the
 let workloadEleIDMap  = {}
@@ -186,14 +187,6 @@ function drawArrow(e){
     connect.setAttribute("tail", "")
     document.body.appendChild(connect)
     createYaml(sourceid, targetid)
-    let copy_display=document.getElementById("copy-button")
-    if (copy_display.style.display="none") {
-        copy_display.style.display="block";
-    };
-    let code_copied=document.getElementById("code_copied")
-    if (code_copied.style.display="block") {
-        code_copied.style.display="none";
-    };
 }
 
 function createYaml(sourceid, targetid){
@@ -275,12 +268,12 @@ spec:
     const yaaml = jsyaml.safeDump(doc);
     manifest.replaceRange("---\n" + yaaml, CodeMirror.Pos(manifest.lastLine()));
     document.getElementById("copybutton").addEventListener("click", function (){
-        navigator.clipboard.writeText(manifest.getValue());
-        let code_copied=document.getElementById("code_copied");
-        if (code_copied.style.display="none") {
-          code_copied.style.display="block";
-      };
-    });
+        navigator.clipboard.writeText(manifest.getValue())
+        code_copied.style.display="inline"
+        window.setTimeout(function (){
+            code_copied.style.display="none"
+          }, 500)
+      });
 }
 
 function getIDOfWorkload(value){
