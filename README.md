@@ -6,19 +6,6 @@ Kubernetes network policy visualizer and manifest builder
 
 ![](/web/images/kubernets_logo.png)
 
-## Build
-
-make
-
-### Run locally
-
-(optional) export KUBERNETS_SERVER_PORT=8080 (default: 8080)
-
-$ kubernets
-
-Open `http://localhost:8080/web/` on browser
-
-
 ## Installation
 
 ### Install From Source
