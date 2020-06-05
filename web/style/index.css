@@ -81,4 +81,7 @@ select{
     cursor: pointer;
     -webkit-transition: all ease  .1s;
 }
-
+#codegen-div div{
+    text-align: center;
+    font-weight: bold;
+}
